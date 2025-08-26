@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://buqi4u6wspsdh"]
+
+[ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Oozey/oozey.gd" id="1_f33eb"]
+[ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Oozey/oozey_diffuse.png" id="1_me0mp"]
+[ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Oozey/Oozey.obj" id="2_f33eb"]
+[ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dfg"]
+albedo_texture = ExtResource("1_me0mp")
+metallic_specular = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_me0mp"]
+radius = 2.48849
+height = 6.57378
+
+[node name="Oozey" type="CharacterBody3D" node_paths=PackedStringArray("gravity_component")]
+script = ExtResource("1_f33eb")
+gravity_component = NodePath("GravityComponent")
+
+[node name="Oozey" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.0313394, 0)
+material_override = SubResource("StandardMaterial3D_f8dfg")
+mesh = ExtResource("2_f33eb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.141602, 1.35528, -0.0692596)
+shape = SubResource("CapsuleShape3D_me0mp")
+
+[node name="GravityComponent" parent="." instance=ExtResource("4_f8dfg")]

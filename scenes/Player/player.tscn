@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://c2sqgipck6if4"]
+
+[ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Player/player.gd" id="1_1kbk7"]
+[ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="1_cyojo"]
+[ext_resource type="Script" uid="uid://dwy6ianpq1epu" path="res://scenes/Player/camera_3d.gd" id="2_uiqp4"]
+[ext_resource type="PackedScene" uid="uid://dalgysd5s774m" path="res://Components/MovementComponent/movement_component.tscn" id="3_gqjuk"]
+[ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="4_c4h5g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk62l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk62l"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_kk62l"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "gravity_component", "movement_component", "input_component")]
+script = ExtResource("1_1kbk7")
+camera = NodePath("Camera3D")
+gravity_component = NodePath("GravityComponent")
+movement_component = NodePath("MovementComponent")
+input_component = NodePath("InputComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_kk62l")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.05432, 0, 0, 0, 1, 0, 0, 0)
+material = SubResource("StandardMaterial3D_kk62l")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("input_component", "camera_def_pos", "camera_sneak_pos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415326, 0)
+attributes = SubResource("CameraAttributesPractical_kk62l")
+script = ExtResource("2_uiqp4")
+input_component = NodePath("../InputComponent")
+camera_def_pos = NodePath("../CameraDefPos")
+camera_sneak_pos = NodePath("../CameraSneakPos")
+
+[node name="CameraDefPos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415, 0)
+
+[node name="CameraSneakPos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162524, 0)
+
+[node name="GravityComponent" parent="." instance=ExtResource("1_cyojo")]
+
+[node name="MovementComponent" parent="." instance=ExtResource("3_gqjuk")]
+air_accel_speed = 1.0
+air_decel_speed = 0.3
+
+[node name="InputComponent" parent="." instance=ExtResource("4_c4h5g")]

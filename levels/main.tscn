@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://drm3x7a81s54b"]
+
+[ext_resource type="PackedScene" uid="uid://b6tg2anm1evlw" path="res://scenes/TestCube/test_cube.tscn" id="1_2262g"]
+[ext_resource type="Texture2D" uid="uid://c8swi3qy4p6fk" path="res://levels/test1.png" id="1_l8qe7"]
+[ext_resource type="PackedScene" uid="uid://c2sqgipck6if4" path="res://scenes/Player/player.tscn" id="2_wdj6m"]
+[ext_resource type="PackedScene" uid="uid://buqi4u6wspsdh" path="res://scenes/Oozey/oozey.tscn" id="4_m1504"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m1504"]
+panorama = ExtResource("1_l8qe7")
+
+[sub_resource type="Sky" id="Sky_2262g"]
+sky_material = SubResource("PanoramaSkyMaterial_m1504")
+
+[sub_resource type="Environment" id="Environment_wdj6m"]
+background_mode = 2
+sky = SubResource("Sky_2262g")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ri1ix"]
+albedo_color = Color(0.263985, 5.72636e-05, 0.271713, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wdj6m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, -2, 20, -1)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.91925, 0, 0.547234)
+use_collision = true
+size = Vector3(61.5841, 1, 151.02)
+material = SubResource("StandardMaterial3D_ri1ix")
+
+[node name="TestCube" parent="." instance=ExtResource("1_2262g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7536, -11.7724, -2.69991)
+
+[node name="Player" parent="." instance=ExtResource("2_wdj6m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.40923, 2.54689, -26.0759)
+
+[node name="Oozey" parent="." instance=ExtResource("4_m1504")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.74906, 3.38525, -41.7606)
