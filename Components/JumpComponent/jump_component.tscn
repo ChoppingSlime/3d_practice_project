@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ufstl0mw4kkf"]
+
+[ext_resource type="Script" uid="uid://d2sbq4fctirf4" path="res://Components/JumpComponent/jump_component.gd" id="1_hlfkw"]
+
+[node name="JumpComponent" type="Node" node_paths=PackedStringArray("jump_buffer_timer")]
+script = ExtResource("1_hlfkw")
+jump_buffer_timer = NodePath("JumpBufferTimer")
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true

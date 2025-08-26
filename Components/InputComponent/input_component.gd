@@ -24,3 +24,6 @@ func get_sprint_input() -> bool:
 
 func get_sneak_input() -> bool:
 	return Input.is_action_pressed("sneak")
+
+func get_quit_input() -> bool:
+	return Input.is_action_pressed("quit")

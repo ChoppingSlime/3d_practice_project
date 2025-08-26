@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://drm3x7a81s54b"]
+[gd_scene load_steps=11 format=3 uid="uid://drm3x7a81s54b"]
 
+[ext_resource type="Script" uid="uid://cxydisvpuswmf" path="res://levels/main.gd" id="1_5k4jt"]
 [ext_resource type="PackedScene" uid="uid://b6tg2anm1evlw" path="res://scenes/TestCube/test_cube.tscn" id="1_2262g"]
 [ext_resource type="Texture2D" uid="uid://c8swi3qy4p6fk" path="res://levels/test1.png" id="1_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://c2sqgipck6if4" path="res://scenes/Player/player.tscn" id="2_wdj6m"]
 [ext_resource type="PackedScene" uid="uid://buqi4u6wspsdh" path="res://scenes/Oozey/oozey.tscn" id="4_m1504"]
+[ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="6_qy63d"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m1504"]
 panorama = ExtResource("1_l8qe7")
@@ -17,17 +19,24 @@ sky = SubResource("Sky_2262g")
 tonemap_mode = 2
 glow_enabled = true
 fog_enabled = true
+fog_light_color = Color(0.386223, 0.496525, 0.734683, 1)
+fog_sun_scatter = 0.44
+fog_density = 0.0248
+fog_aerial_perspective = 0.489
+volumetric_fog_albedo = Color(0.440715, 0.638315, 0.96135, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ri1ix"]
 albedo_color = Color(0.263985, 5.72636e-05, 0.271713, 1)
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("input_component")]
+script = ExtResource("1_5k4jt")
+input_component = NodePath("InputComponent")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wdj6m")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, -2, 20, -1)
+transform = Transform3D(0.900708, -0.202223, 0.384488, -0.0954471, 0.771305, 0.629268, -0.42381, -0.603485, 0.675419, -1.23181, 19.7298, -1.683)
 shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
@@ -37,10 +46,12 @@ size = Vector3(61.5841, 1, 151.02)
 material = SubResource("StandardMaterial3D_ri1ix")
 
 [node name="TestCube" parent="." instance=ExtResource("1_2262g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7536, -11.7724, -2.69991)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7186, -11.7724, -67.9027)
 
 [node name="Player" parent="." instance=ExtResource("2_wdj6m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.40923, 2.54689, -26.0759)
 
 [node name="Oozey" parent="." instance=ExtResource("4_m1504")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.74906, 3.38525, -41.7606)
+transform = Transform3D(0.369455, 0, -0.929249, 0, 1, 0, 0.929249, 0, 0.369455, -0.66876, 4.96393, -41.7606)
+
+[node name="InputComponent" parent="." instance=ExtResource("6_qy63d")]

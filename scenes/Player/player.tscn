@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2sqgipck6if4"]
+[gd_scene load_steps=10 format=3 uid="uid://c2sqgipck6if4"]
 
 [ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Player/player.gd" id="1_1kbk7"]
 [ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://dwy6ianpq1epu" path="res://scenes/Player/camera_3d.gd" id="2_uiqp4"]
 [ext_resource type="PackedScene" uid="uid://dalgysd5s774m" path="res://Components/MovementComponent/movement_component.tscn" id="3_gqjuk"]
 [ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="4_c4h5g"]
+[ext_resource type="PackedScene" uid="uid://ufstl0mw4kkf" path="res://Components/JumpComponent/jump_component.tscn" id="6_hvfru"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk62l"]
 
@@ -12,13 +13,18 @@
 albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_kk62l"]
+exposure_multiplier = 0.941
+dof_blur_far_enabled = true
+dof_blur_far_distance = 27.42
+dof_blur_near_enabled = true
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "gravity_component", "movement_component", "input_component")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "gravity_component", "movement_component", "input_component", "jump_component")]
 script = ExtResource("1_1kbk7")
 camera = NodePath("Camera3D")
 gravity_component = NodePath("GravityComponent")
 movement_component = NodePath("MovementComponent")
 input_component = NodePath("InputComponent")
+jump_component = NodePath("JumpComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_kk62l")
@@ -30,6 +36,8 @@ material = SubResource("StandardMaterial3D_kk62l")
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("input_component", "camera_def_pos", "camera_sneak_pos")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415326, 0)
 attributes = SubResource("CameraAttributesPractical_kk62l")
+current = true
+fov = 89.7
 script = ExtResource("2_uiqp4")
 input_component = NodePath("../InputComponent")
 camera_def_pos = NodePath("../CameraDefPos")
@@ -42,9 +50,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162524, 0)
 
 [node name="GravityComponent" parent="." instance=ExtResource("1_cyojo")]
+gravity = 10.0
 
 [node name="MovementComponent" parent="." instance=ExtResource("3_gqjuk")]
 air_accel_speed = 1.0
 air_decel_speed = 0.3
 
 [node name="InputComponent" parent="." instance=ExtResource("4_c4h5g")]
+
+[node name="JumpComponent" parent="." instance=ExtResource("6_hvfru")]
