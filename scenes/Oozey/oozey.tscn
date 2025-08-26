@@ -1,17 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://buqi4u6wspsdh"]
+[gd_scene load_steps=8 format=3 uid="uid://buqi4u6wspsdh"]
 
 [ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Oozey/oozey.gd" id="1_f33eb"]
 [ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Oozey/oozey_diffuse.png" id="1_me0mp"]
 [ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Oozey/Oozey.obj" id="2_f33eb"]
+[ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Oozey/oozey_n.png" id="3_4w5ji"]
 [ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dfg"]
 albedo_texture = ExtResource("1_me0mp")
-metallic_specular = 0.0
+metallic = 0.58
+metallic_specular = 0.46
+roughness = 0.34
+normal_enabled = true
+normal_texture = ExtResource("3_4w5ji")
+texture_filter = 0
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_me0mp"]
-radius = 2.48849
-height = 6.57378
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f8dfg"]
+height = 4.21234
+radius = 2.68994
 
 [node name="Oozey" type="CharacterBody3D" node_paths=PackedStringArray("gravity_component")]
 script = ExtResource("1_f33eb")
@@ -23,7 +29,7 @@ material_override = SubResource("StandardMaterial3D_f8dfg")
 mesh = ExtResource("2_f33eb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.141602, 1.35528, -0.0692596)
-shape = SubResource("CapsuleShape3D_me0mp")
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.141602, 1.06605, -0.0692596)
+shape = SubResource("CylinderShape3D_f8dfg")
 
 [node name="GravityComponent" parent="." instance=ExtResource("4_f8dfg")]

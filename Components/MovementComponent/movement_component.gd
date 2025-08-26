@@ -4,7 +4,7 @@ extends Node
 @export var base_speed : float = 30.0
 @export var sprint_speed_bonus: float = 13
 @export var sneak_speed_bonus: float = -15
-
+@export_subgroup("accel")
 @export var ground_accel_speed : float = 4.0
 @export var ground_decel_speed : float = 4.0
 @export var air_accel_speed: float = 2.0
@@ -41,9 +41,10 @@ func calculate_speed(is_sprinting: bool, is_sneaking: bool) -> float:
 	if is_sprinting and not is_sneaking:
 		adj_speed += sprint_speed_bonus
 	elif is_sneaking and not is_sprinting:
-		adj_speed += sneak_speed_bonus
+		adj_speed = max(adj_speed + sneak_speed_bonus, 0.5)
 		
 	return adj_speed
+
 
 func determine_accelleration(body: CharacterBody3D, direction : float) -> float:
 	if body.is_on_floor_only():
