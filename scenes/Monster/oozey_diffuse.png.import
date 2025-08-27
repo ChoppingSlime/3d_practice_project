@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq66phjkw4fqa"
-path.s3tc="res://.godot/imported/oozey_n.png-033970cc47004e3e1bf73f34f7dcace0.s3tc.ctex"
+uid="uid://crvuk5t38luge"
+path.s3tc="res://.godot/imported/oozey_diffuse.png-5019a5077d3e10f41135e9e60a4f4b33.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/Creature1/oozey_n.png"
-dest_files=["res://.godot/imported/oozey_n.png-033970cc47004e3e1bf73f34f7dcace0.s3tc.ctex"]
+source_file="res://scenes/Monster/oozey_diffuse.png"
+dest_files=["res://.godot/imported/oozey_diffuse.png-5019a5077d3e10f41135e9e60a4f4b33.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://scenes/Oozey/oozey_n.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

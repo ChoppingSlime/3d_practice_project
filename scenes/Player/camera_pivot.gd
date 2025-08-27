@@ -11,11 +11,19 @@ extends Node3D
 var camera_mov_speed: float = 0.1
 var fov_change_speed = 1.1
 
+const SENSITIVITY = 0.004
+
 #bob variables
 const BOB_FREQ = 2.4
 const BOB_AMP = 0.08
 var t_bob = 0.0
-	
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		rotate_y(-event.relative.x * SENSITIVITY)
+		camera.rotate_x(-event.relative.y * SENSITIVITY)
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+
 
 func handle_camera_position(is_sprinting: bool, is_sneaking: bool, ) -> void:
 	handle_sneaking(is_sneaking)

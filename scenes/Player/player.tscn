@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2sqgipck6if4"]
+[gd_scene load_steps=8 format=3 uid="uid://c2sqgipck6if4"]
 
 [ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Player/player.gd" id="1_1kbk7"]
 [ext_resource type="Script" uid="uid://clxbrllivh1jc" path="res://scenes/Player/camera_pivot.gd" id="2_a06cl"]
+[ext_resource type="Script" uid="uid://d1e4ig5ptuws3" path="res://scenes/Player/ray_cast_3d.gd" id="3_c4h5g"]
+[ext_resource type="Script" uid="uid://i2dm86bggb2u" path="res://scenes/Player/movement_componet.gd" id="3_gqjuk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk62l"]
 
@@ -42,3 +44,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415326, 0)
 attributes = SubResource("CameraAttributesPractical_kk62l")
 current = true
 fov = 89.7
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
+target_position = Vector3(0, -1, -100)
+collision_mask = 32768
+debug_shape_custom_color = Color(0.576471, 0, 0, 1)
+script = ExtResource("3_c4h5g")
+
+[node name="MovementComponet" type="Node" parent="."]
+script = ExtResource("3_gqjuk")
