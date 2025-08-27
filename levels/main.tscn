@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://drm3x7a81s54b"]
+[gd_scene load_steps=17 format=3 uid="uid://drm3x7a81s54b"]
 
 [ext_resource type="Script" uid="uid://cxydisvpuswmf" path="res://levels/main.gd" id="1_5k4jt"]
 [ext_resource type="PackedScene" uid="uid://b6tg2anm1evlw" path="res://scenes/TestCube/test_cube.tscn" id="1_2262g"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://c2sqgipck6if4" path="res://scenes/Player/player.tscn" id="2_wdj6m"]
 [ext_resource type="PackedScene" uid="uid://buqi4u6wspsdh" path="res://scenes/Oozey/oozey.tscn" id="4_m1504"]
 [ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="6_qy63d"]
-[ext_resource type="PackedScene" uid="uid://bexmsq2b4r1v7" path="res://scenes/button/button.tscn" id="7_qy63d"]
+[ext_resource type="PackedScene" uid="uid://bexmsq2b4r1v7" path="res://scenes/button3d/button3d.tscn" id="7_qy63d"]
 [ext_resource type="PackedScene" uid="uid://cyu4hkqe4n3j7" path="res://UI/UI.tscn" id="8_6et1j"]
+[ext_resource type="PackedScene" uid="uid://csr320svi6kok" path="res://scenes/button3d_label/button3d_label.tscn" id="8_etqu2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m1504"]
 panorama = ExtResource("1_l8qe7")
@@ -29,6 +30,15 @@ volumetric_fog_albedo = Color(0.440715, 0.638315, 0.96135, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ri1ix"]
 albedo_color = Color(0.263985, 5.72636e-05, 0.271713, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etqu2"]
+albedo_color = Color(0.454902, 0.247059, 0.168627, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jw1n3"]
+albedo_color = Color(0.454902, 0.247059, 0.168627, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdh4e"]
+albedo_color = Color(0.454902, 0.247059, 0.168627, 1)
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("input_component")]
 script = ExtResource("1_5k4jt")
@@ -55,10 +65,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.40923, 2.54689, -26.0759)
 
 [node name="Oozey" parent="." instance=ExtResource("4_m1504")]
 transform = Transform3D(0.369455, 0, -0.929249, 0, 1, 0, 0.929249, 0, 0.369455, -0.66876, 4.96393, -41.7606)
+visible = false
 
 [node name="InputComponent" parent="." instance=ExtResource("6_qy63d")]
 
-[node name="Button" parent="." instance=ExtResource("7_qy63d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.747, 1.76482, -38.7142)
+[node name="DontPressMeButton" parent="." instance=ExtResource("7_qy63d")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.4556, 1.76482, -38.7142)
+
+[node name="Label3D" parent="DontPressMeButton" instance=ExtResource("8_etqu2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0494957, 0.500297, 0.138412)
+
+[node name="Button2" parent="." instance=ExtResource("7_qy63d")]
+transform = Transform3D(-0.605308, 0, 0.795992, 0, 1, 0, -0.795992, 0, -0.605308, -13.7539, 1.76482, -23.6595)
+
+[node name="Label3D" type="Label3D" parent="Button2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.171896, 0.500297, -0.129192)
+billboard = 1
+text = "What is a button?"
 
 [node name="UI" parent="." instance=ExtResource("8_6et1j")]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2827, 2.51046, -42.0604)
+size = Vector3(12.34, 4.06042, 1)
+material = SubResource("StandardMaterial3D_etqu2")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2827, 2.51046, -20.5302)
+size = Vector3(12.34, 4.06042, 1)
+material = SubResource("StandardMaterial3D_jw1n3")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16.8281, 2.51046, -30.9854)
+size = Vector3(22.0474, 4.06042, 1)
+material = SubResource("StandardMaterial3D_xdh4e")

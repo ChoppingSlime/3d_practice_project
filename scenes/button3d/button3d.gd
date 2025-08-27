@@ -1,14 +1,17 @@
-extends StaticBody3D
+class_name Button3D
+extends Node3D
 
 signal button_pressed
-@export var footer_text : String = "Press 'E'"
+@export var footer_text : String = "E"
 
 @export var pressed_color: Color
 @export var not_pressed_color: Color
 
+@export_subgroup("nodes")
+@export var button_label : Label3D
 @onready var button_sprite: CSGBox3D = $ButtonSprite
 @onready var input_component: InputComponent = $InputComponent
-@onready var label_3d: Label3D = $ButtonSprite/ButtonText
+
 @onready var button_timer: Timer = $ButtonTimer
 
 
@@ -16,10 +19,11 @@ var is_pressed: bool = false
 var is_player_in : bool = false
 
 func _ready() -> void:
-	label_3d.hide()
 	button_sprite.material.albedo_color = not_pressed_color
+	button_label.hide()
 
-func _physics_process(delta: float) -> void:
+
+func _physics_process(_delta: float) -> void:
 	if input_component.get_interact_pressed() and is_player_in and not is_pressed:
 		press_button()
 
