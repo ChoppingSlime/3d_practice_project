@@ -1,46 +1,74 @@
 class_name Player
 extends CharacterBody3D
-@export_category("Nodes")
-@export var camera: PlayerCamera
-@export_category("Components")
-@export var gravity_component : GravityComponet
-@export var movement_component : MovementComponent
-@export var input_component : InputComponent
-@export var jump_component : JumpComponent
 
-const LOOKAROUND_SPEED : float = 0.01
-var rot_x = 0
-var rot_y = 0
+var speed
+const WALK_SPEED = 5.0
+const SPRINT_SPEED = 8.0
+const SNEAK_SPEED = 2.0
+const JUMP_VELOCITY = 4.8
+const SENSITIVITY = 0.004
 
-func _physics_process(delta: float) -> void:
-	gravity_component.handle_gravity(self, delta)
-	jump_component.handle_jump(self,input_component.get_jump_pressed(),input_component.get_jump_released())
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = 11
+
+@export var camera_pivot : PlayerCameraPivot
+@export var camera : Camera3D
+
+
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		camera_pivot.rotate_y(-event.relative.x * SENSITIVITY)
+		camera.rotate_x(-event.relative.y * SENSITIVITY)
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+
+
+func _physics_process(delta):
+	handle_inputs(delta)
+
+	# Get the input direction and handle the movement/deceleration.
+	var input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_back")
+	var direction = (camera_pivot.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	movement_component.handle_horizontal_movement(
-		self,
-		input_component.input_horizontal, 
-		input_component.input_lateral, 
-		input_component.get_sprint_input(), 
-		input_component.get_sneak_input()
-		)
-	camera.handle_camera_position(
-		input_component.get_sprint_input(), 
-		input_component.get_sneak_input()
-		)
-		
+	set_new_velocity(direction, speed, delta)
+	
+	camera_pivot.handle_camera_position(Input.is_action_pressed("sprint"), Input.is_action_pressed("sneak"))
+	camera_pivot.handle_hbob(delta, velocity, float(is_on_floor()))
+
 	move_and_slide()
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		# modify accumulated mouse rotation
-		rot_x += event.relative.x * LOOKAROUND_SPEED
-		rot_y += event.relative.y * LOOKAROUND_SPEED
-		# Convert basis to quaternion, keep in mind scale is lost
-		var a = Quaternion(transform.basis.orthonormalized())
-		# Interpolate using spherical-linear interpolation (SLERP).
+func handle_inputs(delta) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 
-		# Apply back
-		transform.basis = Basis(a)
+	# Handle Jump.
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
+	# Handle Sprint.
+	if Input.is_action_pressed("sprint"):
+		speed = SPRINT_SPEED
+	else:
+		speed = WALK_SPEED
+	
+	# Handle Sneak.
+	if Input.is_action_pressed("sneak"):
+		speed = SNEAK_SPEED
+	else:
+		speed = WALK_SPEED
 
-		rotate_object_local(Vector3(0, -1, 0), rot_x) # first rotate in
-		rotate_object_local(Vector3(-1, 0, 0), rot_y) # then rotate in X
+func set_new_velocity(direction, speed, delta) -> void:
+	if is_on_floor():
+		if direction:
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+		else:
+			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+	else:
+		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
+		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)

@@ -1,12 +1,12 @@
 class_name InputComponent
 extends Node
 
-var input_horizontal: float = 0.0
-var input_lateral: float = 0.0
+var input_dir: Vector2 = Vector2.ZERO
+
 
 func _process(_delta: float) -> void:
-	input_horizontal = Input.get_axis("go_left","go_right")
-	input_lateral = Input.get_axis("go_forward","go_back")
+	input_dir = Input.get_vector("go_left","go_right","go_forward","go_back")
+
 
 
 func get_jump_input() -> bool:

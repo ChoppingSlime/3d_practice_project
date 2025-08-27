@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2sqgipck6if4"]
+[gd_scene load_steps=10 format=3 uid="uid://c2sqgipck6if4"]
 
 [ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Player/player.gd" id="1_1kbk7"]
+[ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://clxbrllivh1jc" path="res://scenes/Player/camera_pivot.gd" id="2_a06cl"]
+[ext_resource type="PackedScene" uid="uid://dalgysd5s774m" path="res://Components/MovementComponent/movement_component.tscn" id="3_gqjuk"]
+[ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="4_c4h5g"]
+[ext_resource type="PackedScene" uid="uid://ufstl0mw4kkf" path="res://Components/JumpComponent/jump_component.tscn" id="6_hvfru"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk62l"]
 
@@ -14,10 +18,13 @@ dof_blur_far_enabled = true
 dof_blur_far_distance = 27.42
 dof_blur_near_enabled = true
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "gravity_component", "movement_component", "input_component", "jump_component")]
 script = ExtResource("1_1kbk7")
-camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
+gravity_component = NodePath("GravityComponent")
+movement_component = NodePath("MovementComponent")
+input_component = NodePath("InputComponent")
+jump_component = NodePath("JumpComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_kk62l")
@@ -43,3 +50,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.415326, 0)
 attributes = SubResource("CameraAttributesPractical_kk62l")
 current = true
 fov = 89.7
+
+[node name="GravityComponent" parent="." instance=ExtResource("1_cyojo")]
+gravity = 10.0
+
+[node name="MovementComponent" parent="." instance=ExtResource("3_gqjuk")]
+base_speed = 7.0
+sneak_speed_bonus = -5.0
+air_accel_speed = 1.0
+air_decel_speed = 0.3
+
+[node name="InputComponent" parent="." instance=ExtResource("4_c4h5g")]
+
+[node name="JumpComponent" parent="." instance=ExtResource("6_hvfru")]
