@@ -27,3 +27,6 @@ func get_sneak_input() -> bool:
 
 func get_quit_input() -> bool:
 	return Input.is_action_pressed("quit")
+
+func get_interact_pressed() -> bool:
+	return Input.is_action_just_pressed("interact")
