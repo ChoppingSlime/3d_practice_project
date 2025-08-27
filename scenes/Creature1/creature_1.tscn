@@ -1,0 +1,116 @@
+[gd_scene load_steps=15 format=3 uid="uid://buqi4u6wspsdh"]
+
+[ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Creature1/creature_1.gd" id="1_f33eb"]
+[ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Creature1/oozey_diffuse.png" id="1_me0mp"]
+[ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Creature1/Oozey.obj" id="2_f33eb"]
+[ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Creature1/oozey_n.png" id="3_4w5ji"]
+[ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
+[ext_resource type="Script" uid="uid://dlk84cli12xos" path="res://scenes/Creature1/chase_component.gd" id="6_nv8c5"]
+[ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="7_yaixc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dfg"]
+albedo_texture = ExtResource("1_me0mp")
+metallic = 0.58
+metallic_specular = 0.46
+roughness = 0.34
+normal_enabled = true
+normal_texture = ExtResource("3_4w5ji")
+texture_filter = 0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f8dfg"]
+height = 4.21234
+radius = 2.68994
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nv8c5"]
+radius = 8.33257
+height = 16.8756
+
+[sub_resource type="Animation" id="Animation_miga2"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oozey:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.833333, 1.89612),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(0, 2.69828, 0), Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7j6xx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oozey:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ypvtw"]
+resource_name = "chase"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oozey:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.966667, 1.43333, 1.93333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.436332, 3.0072, 0), Vector3(0, 3.27598, 0), Vector3(0.44855, 3.35627, 0), Vector3(0, 3.27598, 0), Vector3(0.436332, 3.0072, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypvtw"]
+_data = {
+&"RESET": SubResource("Animation_7j6xx"),
+&"chase": SubResource("Animation_ypvtw"),
+&"idle": SubResource("Animation_miga2")
+}
+
+[node name="Creature1" type="CharacterBody3D" node_paths=PackedStringArray("gravity_component", "chase_component")]
+script = ExtResource("1_f33eb")
+gravity_component = NodePath("GravityComponent")
+chase_component = NodePath("ChaseComponent")
+
+[node name="Oozey" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 6.9234e-06, 0.0380019, -0.000806053)
+material_override = SubResource("StandardMaterial3D_f8dfg")
+mesh = ExtResource("2_f33eb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.141591, 1.05542, -0.067973)
+shape = SubResource("CylinderShape3D_f8dfg")
+
+[node name="GravityComponent" parent="." instance=ExtResource("4_f8dfg")]
+
+[node name="ChaseComponent" type="Node" parent="."]
+script = ExtResource("6_nv8c5")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_nv8c5")
+
+[node name="InputComponent" parent="." instance=ExtResource("7_yaixc")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ypvtw")
+}
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

@@ -7,6 +7,8 @@ signal button_pressed
 @export var pressed_color: Color
 @export var not_pressed_color: Color
 
+@export var single_use : bool = false
+
 @export_subgroup("nodes")
 @export var button_label : Label3D
 @onready var button_sprite: CSGBox3D = $ButtonSprite
@@ -30,7 +32,7 @@ func _physics_process(_delta: float) -> void:
 func _on_player_detector_body_entered(body: Node3D) -> void:
 	if body is Player:
 		is_player_in = true
-		unpress_button()
+		show_footer_text()
 
 
 func _on_player_detector_body_exited(body: Node3D) -> void:
@@ -43,7 +45,6 @@ func _on_player_detector_body_exited(body: Node3D) -> void:
 func press_button() -> void:
 	is_pressed = true
 	button_timer.start()
-	print("!!!!")
 	button_pressed.emit()
 	button_sprite.scale.z = 0.8
 	UiManager.emit_hide_footer()
@@ -52,11 +53,15 @@ func press_button() -> void:
 func unpress_button() -> void:
 	is_pressed = false
 	button_sprite.scale.z = 1
-	
 	if is_player_in:
-		UiManager.emit_show_footer_with_text(footer_text)
+		show_footer_text()
 		button_sprite.material.albedo_color = not_pressed_color
+	if single_use:
+		queue_free()
 		
 
 func _on_button_timer_timeout() -> void:
 	unpress_button()
+
+func show_footer_text() -> void:
+	UiManager.emit_show_footer_with_text(footer_text)

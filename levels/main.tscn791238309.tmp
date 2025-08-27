@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b6tg2anm1evlw" path="res://scenes/TestCube/test_cube.tscn" id="1_2262g"]
 [ext_resource type="Texture2D" uid="uid://c8swi3qy4p6fk" path="res://levels/test1.png" id="1_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://c2sqgipck6if4" path="res://scenes/Player/player.tscn" id="2_wdj6m"]
-[ext_resource type="PackedScene" uid="uid://buqi4u6wspsdh" path="res://scenes/Creature1/creature_1.tscn" id="4_m1504"]
+[ext_resource type="PackedScene" uid="uid://buqi4u6wspsdh" path="res://scenes/Creature1/oozey.tscn" id="4_m1504"]
 [ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="6_qy63d"]
 [ext_resource type="PackedScene" uid="uid://bexmsq2b4r1v7" path="res://scenes/button3d/button3d.tscn" id="7_qy63d"]
 [ext_resource type="PackedScene" uid="uid://cyu4hkqe4n3j7" path="res://UI/UI.tscn" id="8_6et1j"]
@@ -98,7 +98,6 @@ button = NodePath("DontPressMeButton")
 
 [node name="DontPressMeButton" parent="Creature1Spawner" instance=ExtResource("7_qy63d")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.4556, 1.76482, -38.7142)
-single_use = true
 
 [node name="Label3D" parent="Creature1Spawner/DontPressMeButton" instance=ExtResource("8_etqu2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0494957, 0.500297, 0.138412)

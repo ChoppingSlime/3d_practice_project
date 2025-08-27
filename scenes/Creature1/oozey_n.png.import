@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cq66phjkw4fqa"
-path.s3tc="res://.godot/imported/oozey_n.png-971bd94dd895ba4b06f697ff528b7ff7.s3tc.ctex"
+path.s3tc="res://.godot/imported/oozey_n.png-033970cc47004e3e1bf73f34f7dcace0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/Oozey/oozey_n.png"
-dest_files=["res://.godot/imported/oozey_n.png-971bd94dd895ba4b06f697ff528b7ff7.s3tc.ctex"]
+source_file="res://scenes/Creature1/oozey_n.png"
+dest_files=["res://.godot/imported/oozey_n.png-033970cc47004e3e1bf73f34f7dcace0.s3tc.ctex"]
 
 [params]
 

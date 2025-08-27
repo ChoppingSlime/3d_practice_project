@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crvuk5t38luge"
-path.s3tc="res://.godot/imported/oozey_diffuse.png-157f258359f84fc429e570830b635228.s3tc.ctex"
+path.s3tc="res://.godot/imported/oozey_diffuse.png-976478d989ca010fa06c89454333dd83.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/Oozey/oozey_diffuse.png"
-dest_files=["res://.godot/imported/oozey_diffuse.png-157f258359f84fc429e570830b635228.s3tc.ctex"]
+source_file="res://scenes/Creature1/oozey_diffuse.png"
+dest_files=["res://.godot/imported/oozey_diffuse.png-976478d989ca010fa06c89454333dd83.s3tc.ctex"]
 
 [params]
 

@@ -24,6 +24,10 @@ UiManager="*res://globals/ui_manager.gd"
 window/size/viewport_width=1080
 window/size/viewport_height=720
 
+[global_group]
+
+Level=""
+
 [gui]
 
 theme/custom="uid://b3sqlyo05aj2q"
