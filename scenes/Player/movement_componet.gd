@@ -39,15 +39,15 @@ func handle_inputs(body : CharacterBody3D, delta: float, camera_pivot: PlayerCam
 
 func set_new_velocity(direction, speed, delta, body : CharacterBody3D) -> void:
 	var velocity : Vector3
-	if body.is_on_floor():
-		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
-		else:
-			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
-			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+
+	if direction:
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
-		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
+		velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
+		velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+
+	velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
+	velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
 	body.velocity.x = velocity.x
 	body.velocity.z = velocity.z

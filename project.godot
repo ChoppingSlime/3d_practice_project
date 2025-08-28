@@ -84,4 +84,6 @@ interact={
 
 [layer_names]
 
+3d_physics/layer_2="monster"
+3d_physics/layer_8="player"
 3d_physics/layer_16="raycast"
