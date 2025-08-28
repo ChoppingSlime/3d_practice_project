@@ -25,6 +25,10 @@ Global="*res://global.gd"
 window/size/viewport_width=1080
 window/size/viewport_height=720
 
+[editor]
+
+movie_writer/movie_file="D:/VIDEO/godot_records/recordin.avi"
+
 [global_group]
 
 Level=""

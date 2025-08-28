@@ -5,7 +5,6 @@
 [ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Monster/Oozey.obj" id="2_f33eb"]
 [ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Monster/oozey_n.png" id="3_4w5ji"]
 [ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
-[ext_resource type="Script" uid="uid://wfmgt3ew1lc7" path="res://scenes/Monster/player_detector.gd" id="5_o1him"]
 [ext_resource type="Script" uid="uid://buq8whinohhby" path="res://scenes/Monster/raycast_manager.gd" id="6_mntuo"]
 [ext_resource type="Script" uid="uid://dlk84cli12xos" path="res://scenes/Monster/chase_component.gd" id="6_nv8c5"]
 
@@ -25,6 +24,10 @@ radius = 2.68994
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nv8c5"]
 radius = 8.33257
 height = 16.8756
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o1him"]
+radius = 13.639
+height = 36.5425
 
 [sub_resource type="Animation" id="Animation_7j6xx"]
 length = 0.001
@@ -52,10 +55,10 @@ tracks/0/path = NodePath("Mesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.966667, 1.43333, 1.93333),
+"times": PackedFloat32Array(0, 0.36667, 0.86667, 1.33334, 1.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.436332, 3.0072, 0), Vector3(0, 3.27598, 0), Vector3(0.44855, 3.35627, 0), Vector3(0, 3.27598, 0), Vector3(0.436332, 3.0072, 0)]
+"values": [Vector3(0, 0.13439, 0), Vector3(0.436332, -0.13439, 0), Vector3(0, 0.13439, 0), Vector3(0.44855, 0.214676, 0), Vector3(0, 0.13439, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_miga2"]
@@ -72,7 +75,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.833333, 1.89612),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 3.14159, 0), Vector3(0, 2.69828, 0), Vector3(0, 3.14159, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, -0.443314, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ypvtw"]
@@ -82,11 +85,14 @@ _data = {
 &"idle": SubResource("Animation_miga2")
 }
 
-[node name="Monster" type="CharacterBody3D" node_paths=PackedStringArray("gravity_component", "chase_component")]
+[node name="Monster" type="CharacterBody3D" node_paths=PackedStringArray("raycast_manager", "gravity_component", "chase_component", "animation_player", "mesh")]
 collision_layer = 2
 script = ExtResource("1_f33eb")
+raycast_manager = NodePath("RaycastManager")
 gravity_component = NodePath("GravityComponent")
 chase_component = NodePath("ChaseComponent")
+animation_player = NodePath("AnimationPlayer")
+mesh = NodePath("Mesh")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.5, 0, 1.26759e-06, 0, 0.5, 0, -1.26759e-06, 0, -0.5, 0, 0, 0)
@@ -97,28 +103,30 @@ mesh = ExtResource("2_f33eb")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.141591, 1.05542, -0.067973)
 shape = SubResource("CylinderShape3D_f8dfg")
 
-[node name="PlayerDetector" type="Area3D" parent="." node_paths=PackedStringArray("raycast_manager", "monster")]
+[node name="PlayerEntranceDetector" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00364304, 0, 0.0280504)
 collision_layer = 0
 collision_mask = 128
-script = ExtResource("5_o1him")
-raycast_manager = NodePath("RaycastManager")
-monster = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerDetector"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerEntranceDetector"]
 shape = SubResource("CapsuleShape3D_nv8c5")
 
-[node name="RaycastManager" type="Node3D" parent="PlayerDetector"]
-script = ExtResource("6_mntuo")
-
-[node name="CenterRaycast" type="RayCast3D" parent="PlayerDetector/RaycastManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000307083, 1.39969, -0.0130091)
-target_position = Vector3(0, 0, 10)
+[node name="PlayerExitDetector" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00364304, 0, 0.0280504)
+collision_layer = 0
 collision_mask = 128
 
-[node name="CSGBox3D" type="CSGBox3D" parent="PlayerDetector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0360718, 0.603614, 6.86006)
-size = Vector3(0.146484, 1, 2.9541)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerExitDetector"]
+shape = SubResource("CapsuleShape3D_o1him")
+
+[node name="RaycastManager" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00364304, 0, 0.0280504)
+script = ExtResource("6_mntuo")
+
+[node name="CenterRaycast" type="RayCast3D" parent="RaycastManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000307083, 1.39969, -0.0130091)
+target_position = Vector3(0, 0, 20)
+collision_mask = 128
 
 [node name="GravityComponent" parent="." instance=ExtResource("4_f8dfg")]
 
@@ -130,5 +138,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_ypvtw")
 }
 
-[connection signal="body_entered" from="PlayerDetector" to="PlayerDetector" method="_on_body_entered"]
-[connection signal="body_exited" from="PlayerDetector" to="PlayerDetector" method="_on_body_exited"]
+[connection signal="body_entered" from="PlayerEntranceDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerExitDetector" to="." method="_on_player_exit_detector_body_exited"]

@@ -34,3 +34,6 @@ func get_angle() -> int:
 			if sign(final_angle) != sign(angle):
 				final_angle += angle
 	return final_angle
+
+func is_facing_player() -> bool:
+	return center_raycast.is_colliding()
