@@ -1,12 +1,12 @@
 class_name Player
 extends CharacterBody3D
 
+
 signal facing_button(status : bool)
 
 @export var camera_pivot : PlayerCameraPivot
 @export var camera : Camera3D
 
-@onready var ray_cast_3d: RayCast3D = $CameraPivot/Camera3D/RayCast3D
 @onready var movement_componet: Node = $MovementComponet
 @onready var item_handler: ItemHandler = $ItemHandler
 
@@ -31,4 +31,5 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
-	pass # Replace with function body.
+	if body is DefaultItem:
+		item_handler.forget_picking_up(body)

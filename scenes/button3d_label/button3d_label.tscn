@@ -1,4 +1,0 @@
-[gd_scene format=3 uid="uid://csr320svi6kok"]
-
-[node name="Button3DLabel" type="Label3D"]
-text = "Do. Not. Press. Me."

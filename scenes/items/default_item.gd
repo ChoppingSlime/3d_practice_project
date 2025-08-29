@@ -11,3 +11,9 @@ func drop_mode() -> void:
 
 func pick_up_mode(new_global_position: Vector3) -> void:
 	pass
+
+func start_use_item() -> void:
+	pass
+
+func stop_use_item() -> void:
+	pass

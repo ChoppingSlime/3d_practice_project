@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bexmsq2b4r1v7"]
+[gd_scene load_steps=6 format=3 uid="uid://bexmsq2b4r1v7"]
 
 [ext_resource type="Script" uid="uid://b2t5j7xhfce6b" path="res://scenes/button3d/button3d.gd" id="1_lrmay"]
 [ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="2_s3p44"]
 [ext_resource type="Script" uid="uid://b41hpfqgc07yd" path="res://scenes/button3d/button_box.gd" id="2_voccy"]
-[ext_resource type="PackedScene" uid="uid://csr320svi6kok" path="res://scenes/button3d_label/button3d_label.tscn" id="3_yrfr3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3p44"]
 albedo_color = Color(0.540848, 0.300806, 0.211299, 1)
@@ -38,9 +37,10 @@ shape = SubResource("BoxShape3D_lrmay")
 wait_time = 0.7
 one_shot = true
 
-[node name="Button3DLabel" parent="." instance=ExtResource("3_yrfr3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.343073, 0)
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337393, 0)
 billboard = 1
+text = "Do. Not. Press. Me."
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]

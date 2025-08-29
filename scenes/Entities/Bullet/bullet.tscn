@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl34bjleaygqy"]
+
+[ext_resource type="Script" uid="uid://uc2abxnqhr82" path="res://scenes/Entities/Bullet/bullet.gd" id="1_sfvok"]
+[ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Entities/Monster/oozey_n.png" id="2_3kerf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_d2juu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qi6v2"]
+albedo_texture = ExtResource("2_3kerf")
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.3
+
+[node name="Bullet" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_sfvok")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_d2juu")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+material = SubResource("StandardMaterial3D_qi6v2")

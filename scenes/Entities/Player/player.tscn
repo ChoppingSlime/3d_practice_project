@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2sqgipck6if4"]
+[gd_scene load_steps=10 format=3 uid="uid://c2sqgipck6if4"]
 
-[ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Player/player.gd" id="1_1kbk7"]
-[ext_resource type="Script" uid="uid://clxbrllivh1jc" path="res://scenes/Player/camera_pivot.gd" id="2_a06cl"]
-[ext_resource type="Script" uid="uid://d1e4ig5ptuws3" path="res://scenes/Player/ray_cast_3d.gd" id="3_c4h5g"]
-[ext_resource type="Script" uid="uid://i2dm86bggb2u" path="res://scenes/Player/movement_componet.gd" id="3_gqjuk"]
-[ext_resource type="Script" uid="uid://ct2uvrug07gsc" path="res://scenes/Player/item_handler.gd" id="5_uiqp4"]
+[ext_resource type="Script" uid="uid://c08dvyaholltw" path="res://scenes/Entities/Player/player.gd" id="1_1kbk7"]
+[ext_resource type="Script" uid="uid://clxbrllivh1jc" path="res://scenes/Entities/Player/camera_pivot.gd" id="2_a06cl"]
+[ext_resource type="Script" uid="uid://d1e4ig5ptuws3" path="res://scenes/Entities/Player/ray_cast_3d.gd" id="3_c4h5g"]
+[ext_resource type="Script" uid="uid://i2dm86bggb2u" path="res://scenes/Entities/Player/movement_componet.gd" id="3_gqjuk"]
+[ext_resource type="Script" uid="uid://ct2uvrug07gsc" path="res://scenes/Entities/Player/item_handler.gd" id="5_uiqp4"]
+[ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="6_7oxwj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk62l"]
 height = 1.97015
@@ -19,15 +20,11 @@ dof_blur_far_distance = 27.42
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera")]
 collision_layer = 128
 script = ExtResource("1_1kbk7")
-camera_pivot = NodePath("CameraPivot")
-camera = NodePath("CameraPivot/Camera3D")
+camera_pivot = NodePath("Head")
+camera = NodePath("Head/Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_kk62l")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000441194, 0.00713098, 0.280811)
-radius = 0.0634766
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 0
@@ -36,43 +33,46 @@ collision_mask = 6
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CylinderShape3D_uiqp4")
 
-[node name="CameraPivot" type="Node3D" parent="." node_paths=PackedStringArray("default_position", "sneaking_position", "camera")]
+[node name="Head" type="Node3D" parent="." node_paths=PackedStringArray("default_position", "sneaking_position", "camera")]
 script = ExtResource("2_a06cl")
 default_position = NodePath("Default")
 sneaking_position = NodePath("Sneaking")
 camera = NodePath("Camera3D")
 
-[node name="Default" type="Marker3D" parent="CameraPivot"]
+[node name="Default" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.858931, 0)
 
-[node name="Sneaking" type="Marker3D" parent="CameraPivot"]
+[node name="Sneaking" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162524, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+[node name="Camera3D" type="Camera3D" parent="Head"]
 attributes = SubResource("CameraAttributesPractical_kk62l")
 current = true
 fov = 89.7
 
-[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
 target_position = Vector3(0, -1, -100)
 collision_mask = 32768
 debug_shape_custom_color = Color(0.576471, 0, 0, 1)
 script = ExtResource("3_c4h5g")
 
-[node name="ItemEquipPosition" type="Marker3D" parent="CameraPivot"]
+[node name="ItemEquipPosition" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.690155, -0.699279, -0.601151)
 
-[node name="ItemLight" type="SpotLight3D" parent="CameraPivot"]
+[node name="ItemLight" type="SpotLight3D" parent="Head"]
 transform = Transform3D(0.626825, -0.410846, -0.662039, 0.28247, 0.911705, -0.298338, 0.726155, 2.16411e-08, 0.687531, 0, -0.220812, 0)
 light_cull_mask = 4294443008
 spot_range = 1.53315
 
+[node name="ItemHandler" type="Node3D" parent="." node_paths=PackedStringArray("player", "item_equip_pos")]
+script = ExtResource("5_uiqp4")
+player = NodePath("..")
+item_equip_pos = NodePath("../Head/ItemEquipPosition")
+
 [node name="MovementComponet" type="Node" parent="."]
 script = ExtResource("3_gqjuk")
 
-[node name="ItemHandler" type="Node3D" parent="." node_paths=PackedStringArray("item_equip_pos")]
-script = ExtResource("5_uiqp4")
-item_equip_pos = NodePath("../CameraPivot/ItemEquipPosition")
+[node name="InputComponent" parent="." instance=ExtResource("6_7oxwj")]
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

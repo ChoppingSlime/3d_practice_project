@@ -30,3 +30,15 @@ func get_quit_input() -> bool:
 
 func get_interact_pressed() -> bool:
 	return Input.is_action_just_pressed("interact")
+
+func get_lmb_pressed() -> bool:
+	return Input.is_action_just_pressed("LMB")
+
+func get_lmb_released() -> bool:
+	return Input.is_action_just_released("LMB")
+
+func get_rmb_pressed() -> bool:
+	return Input.is_action_just_pressed("RMB")
+
+func get_rmb_released() -> bool:
+	return Input.is_action_just_released("RMB")

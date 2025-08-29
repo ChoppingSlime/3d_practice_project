@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://buqi4u6wspsdh"]
 
-[ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Monster/monster.gd" id="1_f33eb"]
-[ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Monster/oozey_diffuse.png" id="1_me0mp"]
-[ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Monster/Oozey.obj" id="2_f33eb"]
-[ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Monster/oozey_n.png" id="3_4w5ji"]
+[ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Entities/Monster/monster.gd" id="1_f33eb"]
+[ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Entities/Monster/oozey_diffuse.png" id="1_me0mp"]
+[ext_resource type="ArrayMesh" uid="uid://c6fr2wmhq6ftl" path="res://scenes/Entities/Monster/Oozey.obj" id="2_f33eb"]
+[ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Entities/Monster/oozey_n.png" id="3_4w5ji"]
 [ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
-[ext_resource type="Script" uid="uid://buq8whinohhby" path="res://scenes/Monster/raycast_manager.gd" id="6_mntuo"]
-[ext_resource type="Script" uid="uid://dlk84cli12xos" path="res://scenes/Monster/chase_component.gd" id="6_nv8c5"]
+[ext_resource type="Script" uid="uid://buq8whinohhby" path="res://scenes/Entities/Monster/raycast_manager.gd" id="6_mntuo"]
+[ext_resource type="Script" uid="uid://dlk84cli12xos" path="res://scenes/Entities/Monster/chase_component.gd" id="6_nv8c5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dfg"]
 albedo_texture = ExtResource("1_me0mp")
