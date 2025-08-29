@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl34bjleaygqy"]
+[gd_scene load_steps=6 format=3 uid="uid://cl34bjleaygqy"]
 
 [ext_resource type="Script" uid="uid://uc2abxnqhr82" path="res://scenes/Entities/Bullet/bullet.gd" id="1_sfvok"]
 [ext_resource type="Texture2D" uid="uid://cq66phjkw4fqa" path="res://scenes/Entities/Monster/oozey_n.png" id="2_3kerf"]
@@ -6,18 +6,37 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_d2juu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qi6v2"]
+albedo_color = Color(0.231083, 0.464302, 0.80914, 1)
 albedo_texture = ExtResource("2_3kerf")
 metallic = 1.0
 metallic_specular = 1.0
 roughness = 0.3
 
-[node name="Bullet" type="RigidBody3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_3kerf"]
+radius = 0.17119
+
+[node name="Bullet" type="CharacterBody3D"]
 collision_layer = 8
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("1_sfvok")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="BulletCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 shape = SubResource("SphereShape3D_d2juu")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 material = SubResource("StandardMaterial3D_qi6v2")
+
+[node name="BulletDeathTimer" type="Timer" parent="."]
+wait_time = 1.515
+
+[node name="Detector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector"]
+shape = SubResource("SphereShape3D_3kerf")
+
+[connection signal="timeout" from="BulletDeathTimer" to="." method="_on_bullet_death_timer_timeout"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

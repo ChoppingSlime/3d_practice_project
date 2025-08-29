@@ -17,3 +17,6 @@ func start_use_item() -> void:
 
 func stop_use_item() -> void:
 	pass
+
+func get_camera_rotation() -> Vector3:
+	return get_parent().get_parent().rotation

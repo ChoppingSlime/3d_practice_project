@@ -1,21 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://5jqc6bwokmhv"]
+[gd_scene load_steps=5 format=3 uid="uid://5jqc6bwokmhv"]
 
 [ext_resource type="Script" uid="uid://dh5uo3wjubk18" path="res://scenes/items/pistol/pistol.gd" id="1_coxm8"]
 [ext_resource type="ArrayMesh" uid="uid://dc30vo8sb01qd" path="res://scenes/items/pistol/pistol.obj" id="2_iaorm"]
+[ext_resource type="PackedScene" uid="uid://cl34bjleaygqy" path="res://scenes/Entities/Bullet/bullet.tscn" id="2_xt0ju"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iaorm"]
 radius = 1.48441
 
-[node name="Pistol" type="StaticBody3D"]
+[node name="Pistol" type="StaticBody3D" node_paths=PackedStringArray("mesh", "collision_shape_3d", "cooldown_timer", "bullet_spawn_pos")]
 collision_layer = 4
 collision_mask = 128
 script = ExtResource("1_coxm8")
+mesh = NodePath("Mesh")
+collision_shape_3d = NodePath("CollisionShape3D")
+cooldown_timer = NodePath("CooldownTImer")
+bullet = ExtResource("2_xt0ju")
+bullet_spawn_pos = NodePath("Mesh/BulletSpawnPos")
 metadata/_custom_type_script = "uid://cx5kd2tau8ul6"
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, -0.169717, 0)
+mesh = ExtResource("2_iaorm")
+
+[node name="BulletSpawnPos" type="Marker3D" parent="Mesh"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, -1.94057e-07, 2.93066, 2.21976)
+
+[node name="BulletDirectionPos" type="Marker3D" parent="Mesh"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, -2.83068e-07, 2.93066, 3.23792)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.61924, 0)
 shape = SubResource("SphereShape3D_iaorm")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, -0.169717, 0)
-mesh = ExtResource("2_iaorm")
+[node name="CooldownTImer" type="Timer" parent="."]
+wait_time = 0.071
+one_shot = true
+
+[connection signal="timeout" from="CooldownTImer" to="." method="_on_cooldown_t_imer_timeout"]

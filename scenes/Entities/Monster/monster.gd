@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var chase_component : ChaseComponent
 @export var animation_player: AnimationPlayer
 @export var mesh: MeshInstance3D
+@export var health_component: HealthComponent
 
 var player: Player = null
 var was_colliding : bool = false
@@ -14,6 +15,7 @@ var was_colliding : bool = false
 func _ready() -> void:
 	if mesh.rotation_degrees.y != 0:
 		mesh.rotation_degrees.y = 0
+	health_component.no_more_health.connect(die)
 
 
 func _physics_process(delta: float) -> void:
@@ -36,3 +38,9 @@ func _on_player_detector_body_entered(body: Node3D) -> void:
 func _on_player_exit_detector_body_exited(body: Node3D) -> void:
 	if body is Player and player == body:
 		player = null
+
+func take_damage(dmg : int) -> void:
+	health_component.take_dmg(dmg)
+
+func die() -> void:
+	queue_free()

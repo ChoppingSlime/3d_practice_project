@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://buqi4u6wspsdh"]
+[gd_scene load_steps=17 format=3 uid="uid://buqi4u6wspsdh"]
 
 [ext_resource type="Script" uid="uid://dte25glut3m1i" path="res://scenes/Entities/Monster/monster.gd" id="1_f33eb"]
 [ext_resource type="Texture2D" uid="uid://crvuk5t38luge" path="res://scenes/Entities/Monster/oozey_diffuse.png" id="1_me0mp"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bej1n810ykpqo" path="res://Components/GravityComponent/gravity_component.tscn" id="4_f8dfg"]
 [ext_resource type="Script" uid="uid://buq8whinohhby" path="res://scenes/Entities/Monster/raycast_manager.gd" id="6_mntuo"]
 [ext_resource type="Script" uid="uid://dlk84cli12xos" path="res://scenes/Entities/Monster/chase_component.gd" id="6_nv8c5"]
+[ext_resource type="Script" uid="uid://vfxog0mmlfog" path="res://scenes/Entities/Monster/health_component.gd" id="8_bdoon"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dfg"]
 albedo_texture = ExtResource("1_me0mp")
@@ -85,7 +86,7 @@ _data = {
 &"idle": SubResource("Animation_miga2")
 }
 
-[node name="Monster" type="CharacterBody3D" node_paths=PackedStringArray("raycast_manager", "gravity_component", "chase_component", "animation_player", "mesh")]
+[node name="Monster" type="CharacterBody3D" node_paths=PackedStringArray("raycast_manager", "gravity_component", "chase_component", "animation_player", "mesh", "health_component")]
 collision_layer = 2
 script = ExtResource("1_f33eb")
 raycast_manager = NodePath("RaycastManager")
@@ -93,6 +94,7 @@ gravity_component = NodePath("GravityComponent")
 chase_component = NodePath("ChaseComponent")
 animation_player = NodePath("AnimationPlayer")
 mesh = NodePath("Mesh")
+health_component = NodePath("HealthComponent")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.5, 0, 1.26759e-06, 0, 0.5, 0, -1.26759e-06, 0, -0.5, 0, 0, 0)
@@ -138,5 +140,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_ypvtw")
 }
 
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("8_bdoon")
+
+[node name="Timer" type="Timer" parent="HealthComponent"]
+wait_time = 0.1
+one_shot = true
+
 [connection signal="body_entered" from="PlayerEntranceDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerExitDetector" to="." method="_on_player_exit_detector_body_exited"]
+[connection signal="timeout" from="HealthComponent/Timer" to="HealthComponent" method="_on_timer_timeout"]
