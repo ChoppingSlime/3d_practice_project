@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://drm3x7a81s54b"]
+[gd_scene load_steps=18 format=3 uid="uid://drm3x7a81s54b"]
 
 [ext_resource type="Script" uid="uid://cxydisvpuswmf" path="res://levels/main.gd" id="1_5k4jt"]
 [ext_resource type="PackedScene" uid="uid://b6tg2anm1evlw" path="res://scenes/TestCube/test_cube.tscn" id="1_2262g"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bexmsq2b4r1v7" path="res://scenes/button3d/button3d.tscn" id="7_qy63d"]
 [ext_resource type="PackedScene" uid="uid://cyu4hkqe4n3j7" path="res://UI/UI.tscn" id="8_6et1j"]
 [ext_resource type="PackedScene" uid="uid://dejjsa28a68ux" path="res://scenes/EntitySpawner/entity_spawner.tscn" id="10_jw1n3"]
+[ext_resource type="PackedScene" uid="uid://5jqc6bwokmhv" path="res://scenes/items/pistol/pistol.tscn" id="10_xdh4e"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m1504"]
 panorama = ExtResource("1_l8qe7")
@@ -83,7 +84,7 @@ size = Vector3(22.0474, 4.06042, 1)
 material = SubResource("StandardMaterial3D_xdh4e")
 
 [node name="Monster" parent="." instance=ExtResource("4_m1504")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96185, 0.0493939, -34.4404)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57375, 0.0493939, -38.5575)
 
 [node name="Creature1Spawner" parent="." node_paths=PackedStringArray("spawn_marker", "button") instance=ExtResource("10_jw1n3")]
 spawn_marker = NodePath("Marker3D")
@@ -96,4 +97,5 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.665
 [node name="Marker3D" type="Marker3D" parent="Creature1Spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6421, 1.76482, -32.8587)
 
-[editable path="Monster"]
+[node name="Pistol" parent="." instance=ExtResource("10_xdh4e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.966, 0.5, -32.5127)

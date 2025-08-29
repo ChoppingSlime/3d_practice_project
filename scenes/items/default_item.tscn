@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdml5ie4bevjt"]
+
+[ext_resource type="Script" uid="uid://cx5kd2tau8ul6" path="res://scenes/items/default_item.gd" id="1_fp4uh"]
+
+[node name="DefaultItem" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 128
+script = ExtResource("1_fp4uh")

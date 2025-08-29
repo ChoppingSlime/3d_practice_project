@@ -8,6 +8,7 @@ signal facing_button(status : bool)
 
 @onready var ray_cast_3d: RayCast3D = $CameraPivot/Camera3D/RayCast3D
 @onready var movement_componet: Node = $MovementComponet
+@onready var item_handler: ItemHandler = $ItemHandler
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -20,3 +21,14 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body is Monster:
+		print("MONSTER!!")
+	elif body is DefaultItem:
+		item_handler.pick_up(body)
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	pass # Replace with function body.

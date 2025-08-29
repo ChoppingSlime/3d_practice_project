@@ -9,10 +9,10 @@ func handle_rotation(body: CharacterBody3D, target: CharacterBody3D, rot : int, 
 		if is_facing_player:
 			start_chase(body, target, delta)
 		elif rot:
-			var abs_rot = abs(rot)
-			var speed = 1.0 / (abs_rot + 0.001)
-			speed *= 1.0 / (1.0 / 1.0)
-			var new_rot = sign(rot) * speed 
+			var new_rot = rot * 50 * delta 
+			if abs(new_rot) < 0.05: 	
+				new_rot = sign(new_rot) * 0.05 
+			print(new_rot)
 
 			body.rotate_y(deg_to_rad(new_rot))
 	if target == null:
