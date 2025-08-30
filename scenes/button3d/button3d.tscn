@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bexmsq2b4r1v7"]
+[gd_scene load_steps=11 format=3 uid="uid://bexmsq2b4r1v7"]
 
 [ext_resource type="Script" uid="uid://b2t5j7xhfce6b" path="res://scenes/button3d/button3d.gd" id="1_lrmay"]
 [ext_resource type="PackedScene" uid="uid://b3yv86pke012g" path="res://Components/InputComponent/input_component.tscn" id="2_s3p44"]
 [ext_resource type="Script" uid="uid://b41hpfqgc07yd" path="res://scenes/button3d/button_box.gd" id="2_voccy"]
+[ext_resource type="ArrayMesh" uid="uid://ctaivd2gm0lid" path="res://scenes/button3d/pedestal.obj" id="4_udycx"]
+[ext_resource type="Texture2D" uid="uid://j7bo68k3l1g8" path="res://scenes/button3d/pedestal_button.png" id="5_461ov"]
+[ext_resource type="ArrayMesh" uid="uid://b0aqr8mumcvq4" path="res://scenes/button3d/pedestal_button.obj" id="5_e4i77"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3p44"]
 albedo_color = Color(0.540848, 0.300806, 0.211299, 1)
@@ -10,12 +13,29 @@ albedo_color = Color(0.540848, 0.300806, 0.211299, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrmay"]
 size = Vector3(3, 1, 3.43945)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcfm1"]
+albedo_texture = ExtResource("5_461ov")
+metallic = 0.59
+metallic_specular = 0.68
+roughness = 0.36
+refraction_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4i77"]
+albedo_texture = ExtResource("5_461ov")
+metallic = 0.21
+metallic_specular = 0.0
+roughness = 0.25
+emission_energy_multiplier = 2.1
+backlight_enabled = true
+refraction_enabled = true
+
 [node name="Button3D" type="Node3D" node_paths=PackedStringArray("button_box")]
 script = ExtResource("1_lrmay")
 button_box = NodePath("ButtonBox")
 
 [node name="ButtonBox" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1573, 0.0634766, 0)
+visible = false
 use_collision = true
 collision_layer = 32769
 size = Vector3(0.451269, 0.236572, 0.486938)
@@ -41,6 +61,25 @@ one_shot = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337393, 0)
 billboard = 1
 text = "Do. Not. Press. Me."
+
+[node name="Pedestal" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0298945, -2.19213, -0.130583)
+mesh = ExtResource("4_udycx")
+surface_material_override/0 = SubResource("StandardMaterial3D_jcfm1")
+
+[node name="PedestalButton" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0437201, -2.04651, -0.19049)
+mesh = ExtResource("5_e4i77")
+surface_material_override/0 = SubResource("StandardMaterial3D_e4i77")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0157176, 2.17747, -0.162934)
+light_color = Color(1, 1, 0.796078, 1)
+light_energy = 16.0
+distance_fade_enabled = true
+spot_range = 5.788
+spot_attenuation = 2.54
+spot_angle = 24.26
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
